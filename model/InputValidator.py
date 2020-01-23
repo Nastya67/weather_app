@@ -8,7 +8,7 @@ class InputValidator:
         with open("normalized_city_names.json", encoding='utf8') as file:
             self._cities = json.loads(file.read())
 
-    def is_valide_city_name(self, city_name):
+    def is_valid_city_name(self, city_name):
         normalized_city_name = unidecode.unidecode(city_name).lower().strip()
         if ", " in normalized_city_name:  # city name with country
             return normalized_city_name in self._cities
@@ -16,7 +16,7 @@ class InputValidator:
         cities_with_this_name = list(filter(reg_exp.match, self._cities))
         return len(cities_with_this_name) != 0
 
-    def is_valide_coordinates(self, lon, lat):
+    def is_valid_coordinates(self, lon, lat):
         try:
             lon_n = float(lon)
             lat_n = float(lat)

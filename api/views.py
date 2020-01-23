@@ -1,7 +1,7 @@
 from flask import request, abort
 from . import api
 from .WeatherResponse import WeatherApiResponse
-from ..model.WeatherExceptions import WeatherException
+from ..model.WeatherExceptions import WeatherException, InputIsNotValid
 from ..model.WeatherRepository import WeatherRepository
 
 
@@ -17,5 +17,6 @@ def get_weather_by_city():
             abort(404, "You must define city name or coordinates")
         city_weather = WeatherApiResponse(res).get_response()
         return city_weather
-    except WeatherException as ex:
+    except (WeatherException, InputIsNotValid) as ex:
         abort(404, ex)
+
