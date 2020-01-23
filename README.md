@@ -15,28 +15,56 @@ You need:
 ****
 ### Project structure
 |weather_app
+
 |---api
+
 |------__init__.py
+
 |------errors.py
+
 |------views.py
+
 |------WeatherResponse.py
+
 |---app
+
 |------__init__.py
+
 |------errors.py
+
 |------views.py
+
 |------WeatherResponse.py
+
 |---model
+
 |------InputValidator.py
+
 |------secret.py
+
 |------WeatherExceptions.py
+
 |------WeatherModel.py
+
 |------WeatherRepository.py
+
 |---templates
+
 |------404.html
+
 |------500.html
+
 |------index.html
+
 |---__init__.py
-|-
+
+|config.py
+
+|manage.py
+
+|normalized_city_names.json
+
+|requirements.txt
 
 
 
