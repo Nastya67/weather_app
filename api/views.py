@@ -1,7 +1,7 @@
 from flask import request, abort
 from . import api
 from .WeatherResponse import WeatherApiResponse
-from ..model.WeatherException import WeatherException
+from ..model.WeatherExceptions import WeatherException
 from ..model.WeatherRepository import WeatherRepository
 
 

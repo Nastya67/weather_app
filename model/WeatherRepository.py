@@ -1,8 +1,9 @@
 import requests
 import json
 
-from .WeatherException import WeatherException
+from .WeatherExceptions import WeatherException, InputIsNotValid
 from .WeatherModel import WeatherModel
+from .InputValidator import InputValidator
 from .secret import API_KEY
 
 
@@ -16,11 +17,15 @@ class WeatherRepository:
         return params
 
     def get_curr_weather_by_city_name(self, city_name):
+        if not InputValidator().is_valide_city_name(city_name):
+            raise InputIsNotValid("Wrong city name")
         params = self._get_params({"q": city_name})
         weather = self._get_weather(params)
         return self._get_weather_model(weather)
 
     def get_curr_weather_by_location(self, lon, lat):
+        if not InputValidator().is_valide_coordinates(lat=lat, lon=lon):
+            raise InputIsNotValid("Wrong city name")
         params = self._get_params({"lat": lat, "lon": lon})
         weather = self._get_weather(params)
         return self._get_weather_model(weather)
