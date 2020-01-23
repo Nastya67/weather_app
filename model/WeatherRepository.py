@@ -8,27 +8,42 @@ from .secret import API_KEY
 
 class WeatherRepository:
     __URL_curr = "http://api.openweathermap.org/data/2.5/weather"
-    __URL_forecast = "api.openweathermap.org/data/2.5/forecast/daily?q={city_name}&cnt=16"
     __URL_img = "http://openweathermap.org/img/w/{img_name}.png"
 
-    def __init__(self):
-        self.params = {"units": "metric", "appid": API_KEY}
+    def _get_params(self, additional_params):
+        params = {"units": "metric", "appid": API_KEY}  # base params
+        params.update(additional_params)
+        return params
 
     def get_curr_weather_by_city_name(self, city_name):
-        self.params['q'] = city_name
-        resp = requests.get(self.__URL_curr, params=self.params)
+        params = self._get_params({"q": city_name})
+        weather = self._get_weather(params)
+        return self._get_weather_model(weather)
+
+    def get_curr_weather_by_location(self, lon, lat):
+        params = self._get_params({"lat": lat, "lon": lon})
+        weather = self._get_weather(params)
+        return self._get_weather_model(weather)
+
+    def _get_weather(self, params):
+        resp = requests.get(self.__URL_curr, params=params)
         weather = json.loads(resp.text)
         if weather.get("cod") != 200:
-            raise WeatherException("Can't get response from weather api: "+weather.get("message"))
-        temp, pres, hum = weather["main"]["temp"], weather["main"]["pressure"], weather["main"]["humidity"]
-        name, description = weather["weather"][0]["main"], weather["weather"][0]["description"]
-        icon_url = self.__URL_img.format(img_name=weather["weather"][0]["icon"])
-        vis, clouds = weather["visibility"], weather["clouds"]["all"]
-        w_speed, w_deg = weather["wind"]["speed"], weather["wind"]["deg"]
-        sunrise, sunset = weather["sys"]["sunrise"], weather["sys"]["sunset"]
-        date = weather["dt"]
-        return WeatherModel(date, city_name, temp, pres, hum, w_speed, w_deg, vis, clouds, sunrise, sunset,
-                            name, description, icon_url)
+            raise WeatherException("Can't get response from weather api: " + weather.get("message"))
+        return weather
 
-    def get_forecast_weather_by_city_name(self):
-        pass
+    def _get_weather_model(self, weather):
+        return WeatherModel(date=weather["dt"],
+                            city_name=weather["name"],
+                            temp=weather["main"]["temp"],
+                            pres=weather["main"]["pressure"],
+                            hum=weather["main"]["humidity"],
+                            w_speed=weather["wind"]["speed"],
+                            w_deg=weather["wind"]["deg"],
+                            vis=weather.get("visibility"),
+                            clouds=weather["clouds"]["all"],
+                            sunrise=weather["sys"]["sunrise"],
+                            sunset=weather["sys"]["sunset"],
+                            name=weather["weather"][0]["main"],
+                            description=weather["weather"][0]["description"],
+                            icon_url=self.__URL_img.format(img_name=weather["weather"][0]["icon"]))
