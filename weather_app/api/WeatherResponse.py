@@ -11,7 +11,8 @@ class WeatherApiResponse:
                     "clouds": weather.clouds,
                     "name": weather.name,
                     "description": weather.description,
-                    "icon_url": weather.icon_url
+                    "icon_url": weather.icon_url,
+                    "code": 200
                     }
         if weather.sunrise and weather.sunset:
             self.json["sunrise"] = str(weather.sunrise.time())
