@@ -5,6 +5,30 @@
     <title>Weather</title>
 </head>
 <body>
-    Hey!
+    <div>
+        <form action="/" method="get">
+            <label>City name</label>
+            <input type="text" name="city_name">
+            <button type="submit">OK</button>
+        </form>
+    </div>
+    {%if w is defined%}
+    <div>
+        <h5>Weather in {{w.city_name}} on {{w.date}}</h5>
+        <div>
+            {{w.name}}, {{w.description}}
+        </div>
+        <div>
+            <img src="{{w.icon_url}}">
+        </div>
+        <div> Temperature: {{w.temp}} C </div>
+        <div> Visibility: {{w.visibility}} m</div>
+        <div> Pressure: {{w.pressure}} hPa </div>
+        <div> Humidity: {{w.humidity}} %</div>
+        <div> Wind: {{w.wind_speed}} m/sec, ({{w.wind_deg}} degrees)</div>
+        <div> Cloudiness: {{w.clouds}} %</div>
+        <div> Sunrise - sunset: {{w.sunrise}} - {{w.sunset}}</div>
+    </div>
+    {%endif%}
 </body>
 </html>
