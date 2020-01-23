@@ -9,9 +9,9 @@ from ..model.WeatherRepository import WeatherRepository
 def get_weather_by_city():
     weather_rep = WeatherRepository()
     try:
-        if request.args.get("city_name"):
+        if request.args.get("city_name"):  # ../api?city_name=**
             res = weather_rep.get_curr_weather_by_city_name(request.args["city_name"])
-        elif request.args.get("lon") and request.args.get("lat"):
+        elif request.args.get("lon") and request.args.get("lat"):  # ../api?lon=**&lat=**
             res = weather_rep.get_curr_weather_by_location(lon=request.args["lon"], lat=request.args["lat"])
         else:
             abort(404, "You must define city name or coordinates")
