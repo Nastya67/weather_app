@@ -53,11 +53,11 @@ Return: json representation of error.
 __api.WeatherResponse.WeatherApiResponse(weather)__ - JSON for the API 
 response is created in this class.\
 Args: *weather* - model.WeatherModel.WeatherModel type.\
-Fields: *json* - dict type. JSON representation of weather.\
+Fields: *json* - dict type. JSON representation of weather.
 
 Methods: 
 * __*get_response()*__ \
-Return: dict type. JSON representation of weather.\
+Return: dict type. JSON representation of weather.
 
 __app.views.index()__ - is controller on base url ../ .
 Accepted method is GET. GET parameters *city_name* or nothing.\
@@ -77,8 +77,8 @@ __app.WeatherResponse.WeatherResponse(weather)__ - class to represent
 object of weather as on front. \
 Args: *weather* - model.WeatherModel.WeatherModel type.\
 Fields: 
-* *city_name* - str type. Name of city where is the weather.\
-* *date* - datetime.date type. Date of weather, UTC.\
+* *city_name* - str type. Name of city where is the weather.
+* *date* - datetime.date type. Date of weather, UTC.
 * *temp* - float type. Temperature, Celsius.
 * *pressure* - float type. Atmospheric pressure, hPa. 
 * *humidity* - float type. Humidity, %.
@@ -106,11 +106,11 @@ Return: bool type. True if coordinates is valid, False otherwise.
 
 __model.WeatherExceptions.WeatherException(message)__ - class inherits from 
 Exception. Custom exception is raised when external API returns an error.
-Args: *message* - str type.\
+Args: *message* - str type.
 
 __model.WeatherExceptions.InputIsNotValid(message)__ - class inherits from 
 Exception. Custom exception is raised when user input is not valid.\
-Args: *message* - str type. \
+Args: *message* - str type. 
 
 __model.WeatherModel.WeatherModel(date, city_name, temp, pres, hum, 
 w_speed, w_deg, vis, clouds, sunrise, sunset, name, description, 
@@ -125,13 +125,13 @@ Args: *date* - int type. Timestamp\
 *vis* - int type or None. Visibility, meter.\
 *clouds* - float type. Cloudiness, %.\
 *sunrise* - int type. Sunrise timestamp, UTC.\
-*sunset* - int type. Sunset timestamp, UTC.\ 
+*sunset* - int type. Sunset timestamp, UTC.\
 *name* - str type. Group of weather parameters (Rain, Snow, Extreme etc.)\
 *description* - str type. Weather condition within the group.\
 *icon_url* - str type. Weather icon. Name of file.\
 Fields: 
-* *city_name* - str type. Name of city where is the weather.\
-* *date* - datetime.date type. Date of weather, UTC.\
+* *city_name* - str type. Name of city where is the weather.
+* *date* - datetime.date type. Date of weather, UTC.
 * *temp* - float type. Temperature, Celsius.
 * *pressure* - float type. Atmospheric pressure, hPa. 
 * *humidity* - float type. Humidity, %.
@@ -151,12 +151,40 @@ Methods:
 * *__get_curr_weather_by_city_name(city_name)__* - validate city_name, 
 pass request on external API, create WeatherModel from received response. \
 Args: *city_name* - str type.\
-Return: model.WeatherModel.WeatherModel type.\
+Return: model.WeatherModel.WeatherModel type.
 * *__get_curr_weather_by_location(lon, lat)__* - validate input data, 
 pass request on external API, create WeatherModel from received response. \
 Args: *lon* - float type. Longitude. \
 *lat* - float type. Latitude.\
-Return: model.WeatherModel.WeatherModel type.\
+Return: model.WeatherModel.WeatherModel type.
 
 ***
 ### API
+#### __Get current weather data for city by city name:__
+*__Description__*:
+You can call by city name or city name and country code. 
+
+*__API call__*: \
+*../api?city_name={city name}*\
+*../api?city_name={city name},{country code}*
+
+*__Parameters__*:
+city_name city name and country code divided by comma, use ISO 3166 
+country codes.
+
+*__Example__*:
+http://127.0.0.1:5000/api/?city_name=london,%20GB 
+#### __Get current weather data for location by geographic coordinates:__
+*__Description__*:
+You can use float values with dot (.) as decimal separator.
+
+*__API call__*: \
+*../api?lon={lon}&lat={lat}*
+
+*__Parameters__*:
+__lat, lon__ coordinates of the location of your interest
+
+*__Example__*:
+http://127.0.0.1:5000/api/?lat=35.2&lon=139.5 
+
+
