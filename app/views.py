@@ -1,18 +1,18 @@
 from flask import render_template, request, redirect, abort
-from . import main
+from . import app
 from .WeatherResponse import WeatherResponse
 from ..model.WeatherException import WeatherException
 from ..model.WeatherRepository import WeatherRepository
 
 
-@main.route("/", methods=["GET"])
+@app.route("/", methods=["GET"])
 def index():
     if request.args.get("city_name"):
         return redirect("/"+request.args.get("city_name"))
     return render_template("index.html")
 
 
-@main.route("/<city_name>", methods=["GET"])
+@app.route("/<city_name>", methods=["GET"])
 def show_city_weather(city_name):
     try:
         weather_rep = WeatherRepository()

@@ -5,11 +5,16 @@ from ..model.WeatherException import WeatherException
 from ..model.WeatherRepository import WeatherRepository
 
 
-@api.route("/<city_name>", methods=["GET"])
-def get_weather_by_city(city_name):
+@api.route("/", methods=["GET"])
+def get_weather_by_city():
+    weather_rep = WeatherRepository()
     try:
-        weather_rep = WeatherRepository()
-        res = weather_rep.get_curr_weather_by_city_name(city_name)
+        if request.args.get("city_name"):
+            res = weather_rep.get_curr_weather_by_city_name(request.args["city_name"])
+        elif request.args.get("lon") and request.args.get("lat"):
+            res = weather_rep.get_curr_weather_by_location(lon=request.args["lon"], lat=request.args["lat"])
+        else:
+            abort(404, "You must define city name or coordinates")
         city_weather = WeatherApiResponse(res).get_response()
         return city_weather
     except WeatherException as ex:
