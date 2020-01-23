@@ -165,8 +165,8 @@ Return: model.WeatherModel.WeatherModel type.
 You can call by city name or city name and country code. 
 
 *__API call__*: \
-*../api?city_name={city name}*\
-*../api?city_name={city name},{country code}*
+*../api?city_name={city_name}*\
+*../api?city_name={city_name}, {country_code}*
 
 *__Parameters__*:
 city_name city name and country code divided by comma, use ISO 3166 
